@@ -1,9 +1,7 @@
 const { User } = require('../model/user')
 const { Post } = require('../model/post')
 const { Admin } = require('../model/user')
-const { createJwtToken } = require('../config/auth');
 const jwt = require("jsonwebtoken");
-const e = require('express');
 
 // create post
 const createPost = async (req, res) => {
@@ -58,7 +56,6 @@ const getListPost = async (req, res) => {
                 let posts = await Post.find( { isDeleted: false, checked: true,  
                     $or: [{ "header": { $regex: query.toLowerCase() } }, { "description": { $regex: query.toLowerCase() } }] 
                 }).sort({ _id: -1 });
-                // .skip(skip).limit(15);
                 if (posts) {
                     return res.json({ status: true, post: posts })
                 } else {
